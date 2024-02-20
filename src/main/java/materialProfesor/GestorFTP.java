@@ -44,7 +44,7 @@ public class GestorFTP {
         is.close();
         return enviado;
     }
-    private boolean descargarFichero (String ficheroRemoto, String pathLocal)
+    public boolean descargarFichero (String ficheroRemoto, String pathLocal)
             throws IOException {
         OutputStream os = new BufferedOutputStream (new FileOutputStream(pathLocal));
         boolean recibido = clienteFTP.retrieveFile (ficheroRemoto, os);

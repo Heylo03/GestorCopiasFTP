@@ -21,6 +21,7 @@ public class Compresor {
         FileOutputStream fos = new FileOutputStream(archivoDestino);
         ZipOutputStream zos = new ZipOutputStream(fos);
         File carpeta = new File(carpetaOrigen);
+
         comprimirRecursivo(carpeta, carpeta.getName(), zos);
         zos.close();
     }

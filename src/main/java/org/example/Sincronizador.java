@@ -31,7 +31,7 @@ public class Sincronizador {
     /**
      * Metodo principal de la clase,sincroniza la carpeta de la nube a los cambios realizados en la local
      */
-    private static void sincronizacion() {
+    public static void sincronizacion() {
         try {
             //login cliente
             FTPClient clienteFtp = new FTPClient();
@@ -67,11 +67,11 @@ public class Sincronizador {
      * @return  Listado de archivos de la nube
      * @throws IOException
      */
-    private static List<String> listadoArchivosRemotos(FTPClient clienteFTP, String carpeta) throws IOException {
-        List<String> listaArchivosRemotos = new ArrayList<>();
+    public static List<String> listadoArchivosRemotos(FTPClient clienteFTP, String carpeta) throws IOException {
+        List<String> listaRemota = new ArrayList<>();
         clienteFTP.changeWorkingDirectory(carpeta);
-        Collections.addAll(listaArchivosRemotos, clienteFTP.listNames());
-        return listaArchivosRemotos;
+        Collections.addAll(listaRemota, clienteFTP.listNames());
+        return listaRemota;
     }
 
     /**
@@ -79,16 +79,16 @@ public class Sincronizador {
      * @param carpetaLocal carpeta de los archivos del equipo para subir a la nube
      * @return listado de archivos de la carpetaLocal
      */
-    private static List<String> listadoArchivosLocales(String carpetaLocal) {
-        List<String> listaArchivosLocales = new ArrayList<>();
+    public static List<String> listadoArchivosLocales(String carpetaLocal) {
+        List<String> listaLocal = new ArrayList<>();
         File directorio = new File(carpetaLocal);
         File[] ListaArchivos = directorio.listFiles();
         if (ListaArchivos != null) {
             for (File archivo : ListaArchivos) {
-                listaArchivosLocales.add(archivo.getName());
+                listaLocal.add(archivo.getName());
             }
         }
-        return listaArchivosLocales;
+        return listaLocal;
     }
 
     /**
@@ -99,7 +99,7 @@ public class Sincronizador {
      * @return true para el caso de que sea la ultima versión , false en caso contario
      * @throws IOException
      */
-    private static boolean archivoActualizado(FTPClient clienteFTP, String carpetaRemota, String nombreArchivo) throws IOException {
+    public static boolean archivoActualizado(FTPClient clienteFTP, String carpetaRemota, String nombreArchivo) throws IOException {
         clienteFTP.changeWorkingDirectory(carpetaRemota);
         FTPFile[] archivosRemotos = clienteFTP.listFiles();
         for (FTPFile archivoRemoto : archivosRemotos) {
@@ -117,7 +117,7 @@ public class Sincronizador {
      * @param archivo archivo que queremos borrar
      * @throws IOException
      */
-    private static void borraArchivo(FTPClient clienteFTP, String archivo) throws IOException {
+    public static void borraArchivo(FTPClient clienteFTP, String archivo) throws IOException {
         clienteFTP.deleteFile(archivo);
     }
 
@@ -127,7 +127,7 @@ public class Sincronizador {
      * @param archivo archivo a subir
      * @throws IOException
      */
-    private static void subeArchivo(FTPClient clienteFTP, String archivo) throws IOException {
+    public static void subeArchivo(FTPClient clienteFTP, String archivo) throws IOException {
         File ficheroLocal = new File(CARPETA_LOCAL + File.separator + archivo);
         FileInputStream fis = new FileInputStream(ficheroLocal);
         clienteFTP.storeFile(archivo, fis);
